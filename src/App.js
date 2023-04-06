@@ -6,36 +6,61 @@ import avatar from "./images/image-avatar.png";
 
 function Header() {
   return (
-    <div>
-      <img src={logo} alt=""></img>
+    <header className="flex items-center justify-between p-8 border-b border-slate-400 max-w-7xl mx-auto">
+      <div className="flex items-center justify-start gap-4">
+        <img src={logo} alt=""></img>
 
-      <nav>
-        <ul>
-          <li>Collections</li>
-          <li>Men</li>
-          <li>Women</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
-      </nav>
+        <nav >
+          <ul className="flex items-center justify-start gap-4">
+            <li>Collections</li>
+            <li>Men</li>
+            <li>Women</li>
+            <li>About</li>
+            <li>Contact</li>
+          </ul>
+        </nav>
 
-      <div>
-        <ul>
-          <li><button></button></li>
-            <AiOutlineShoppingCart />
-          <li><img src={avatar} alt=""></img></li>
-        </ul>
+        <div>
+          <ul className="flex items-center justify-start gap-4">
+            <li><button></button></li>
+              <AiOutlineShoppingCart />
+            <li><img src={avatar} alt="" className="width-12"></img></li>
+          </ul>
+        </div>
       </div>
-  </div>
+    </header>
   )
 }
 
 function App() {
   const [products] = useState(data) // state value
+  const [value, setValue] = useState(0); // state value
+
+  const {mainImage} = products[value];
 
   return (
     <>
       <Header />
+
+      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <article>
+          <img src={mainImage} alt="" className="w-9/12 rounded-2xl"/>
+
+          <ul className="flex items-center justify-start gap-5 flex-wrap mt-5">
+            {products.map((item, index) => (
+            <li key={item.id} onClick={()=> setValue(index)} className={${index === value && "border-2 border-orange-400 opacity-80"}}>
+              <img src={item.thumbnail} alt="" className="w-20 rounded-xl"/>
+            </li>
+          ))}
+          </ul>
+        </article>
+
+        <article>
+            <p>test</p>
+
+        </article>
+      </section>
+
     </>
   );
 }
