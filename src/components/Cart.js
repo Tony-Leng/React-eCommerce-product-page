@@ -1,6 +1,6 @@
 import React from "react";
 import thumbnail from "../images/image-product-1-thumbnail.jpg";
-import iconDelete from "./images/icon-delete.svg";
+import iconDelete from "../images/icon-delete.svg";
 
 export default function Cart() {
   const text = "Autumn Limited Edition Sneakers"
