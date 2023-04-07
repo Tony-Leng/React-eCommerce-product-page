@@ -32,6 +32,41 @@ function Header() {
           </ul>
         </div>
     </header>
+  );
+}
+
+function Lightbox(products, slideIndex, nextSlide, prevSlide) {
+  return (
+    <article className="bg-black fixed top-0 left-0 bottom-0 right-0 bg-opacity-75">
+      <div className="flex items-center justify-center">
+        {products.map((item, index) => (
+            <div
+              key={index}
+              className={slideIndex === index + 1 ? "relative" : "hidden"}
+            >
+            <img
+              src={item.mainImage}
+              alt=""
+              className="big-image lg:w-full lg:rounded-2xl"
+              style
+            />
+
+            <ul>
+              <li>
+                <button onClick={prevSlide} className="bg-white rounded-full p-5 shadow absolute left-4 top-1/2 -translate-y-1/2">
+                  <FaChevronLeft />
+                </button>
+              </li>
+              <li>
+                <button onClick={nextSlide} className="bg-white rounded-full p-5 shadow absolute right-4 top-1/2 -translate-y-1/2">
+                  <FaChevronRight />
+                </button>
+              </li>
+            </ul>
+          </div>
+        ))}
+      </div>
+    </article>
   )
 }
 
@@ -67,8 +102,9 @@ function App() {
   return (
     <>
       <Header />
+      <Lightbox products={products} slideIndex={slideIndex} nextSlide={nextSlide} prevSlide={prevSlide}/>
 
-      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:mt-10 lg:place-items-center">
+      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:place-items-center lg:py-20">
         <article>
           <div>
             {products.map((item, index) => (
