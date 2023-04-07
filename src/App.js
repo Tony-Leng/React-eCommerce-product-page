@@ -2,6 +2,7 @@ import { useState } from "react";
 import {data} from "./data";
 import logo from "./images/logo.svg";
 import {AiOutlineShoppingCart} from "react-icons/ai";
+import {FaChevronLeft, FaChevronRight} from "react-icons/fa";
 import avatar from "./images/image-avatar.png";
 import minus from "./images/icon-minus.svg";
 import plus from "./images/icon-plus.svg";
@@ -38,22 +39,59 @@ function App() {
   const [products] = useState(data) // state value
   const [value, setValue] = useState(0); // state value
   const [amount, setAmount] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(1);
 
   const {mainImage} = products[value];
+
+  const nextSlide = () => {
+    if (slideIndex !== products.length){
+      setSlideIndex(slideIndex + 1);
+    } else if (slideIndex === products.length) {
+      setSlideIndex(1);
+    }
+  }
+
+  const prevSlide = () => {
+    if (slideIndex !== 1) {
+      setSlideIndex(slideIndex - 1);
+    } else if (slideIndex === 1) {
+      setSlideIndex(products.length);
+    }
+  }
 
   const handleMinus = () => {
     setAmount(amount - 1);
     if (amount <= 0) setAmount(0);
-  }
+  };
+
   return (
     <>
       <Header />
 
-      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
+      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:mt-10">
         <article>
-          <img src={mainImage} alt="" className="w-full rounded-2xl"/>
+          <div>
+            {products.map((item, index) => (
+              <div key={index} className={slideIndex === index + 1 ? "relative" : "hidden"}>
+              <img src={item.mainImage} alt="" className="w-full lg:rounded-2xl"/>
 
-          <ul className="flex items-center justify-start gap-5 flex-wrap mt-5">
+              <ul className="lg:hidden">
+                <li>
+                  <button onClick={prevSlide} className="bg-white rounded-full p-5 shadow absolute left-4 top-1/2 -translate-y-1/2">
+                    <FaChevronLeft />
+                  </button>
+                </li>
+                <li>
+                  <button onClick={nextSlide} className="bg-white rounded-full p-5 shadow absolute right-4 top-1/2 -translate-y-1/2">
+                    <FaChevronRight />
+                  </button>
+                </li>
+              </ul>
+            </div>
+            ))}
+          </div>
+
+          <ul className="hidden lg:flex items-center justify-start gap-5 flex-wrap mt-5">
             {products.map((item, index) => (
             <li key={item.id} onClick={()=> setValue(index)} className={
               `${index === value && "border-2 border-orange-400 opacity-80"} border-2 rounded-2xl overflow-hidden cursor-pointer`
@@ -99,7 +137,7 @@ function App() {
 
               <button className="flex items-center justify-center gap-4 bg-orange-500 py-2 px-4 text-white font-bold rounded-lg shadow mt-5 w-full">
                 <AiOutlineShoppingCart
-                className="text-2xl text-slate-600"/> Add to cart
+                className="text-2xl"/> Add to cart
               </button>
 
             </div>
