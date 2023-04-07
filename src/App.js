@@ -6,6 +6,7 @@ import minus from "./images/icon-minus.svg";
 import plus from "./images/icon-plus.svg";
 import Header from "./components/Header"
 import Lightbox from "./components/Lightbox"
+import Cart from "./components/Cart";
 
 
 function App() {
@@ -133,7 +134,7 @@ function App() {
               </ul>
 
               <div className="lg:flex-1">
-                <button className="flex items-center justify-center gap-4 bg-orange-500 py-2 px-4 text-white font-bold rounded-lg shadow mt-5 w-full lg:mt-0 hover:bg-orange-600">
+                <button className="flex items-center justify-center gap-4 bg-orange-500 py-2 px-4 text-white font-bold rounded-lg shadow mt-5 w-full lg:mt-0 hover:bg-orange-600 transition-all duration-200">
                   <AiOutlineShoppingCart
                   className="text-2xl"/> Add to cart
                 </button>
