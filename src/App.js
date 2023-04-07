@@ -1,80 +1,19 @@
 import { useState } from "react";
 import {data} from "./data";
-import logo from "./images/logo.svg";
 import {AiOutlineShoppingCart} from "react-icons/ai";
 import {FaChevronLeft, FaChevronRight} from "react-icons/fa";
-import avatar from "./images/image-avatar.png";
 import minus from "./images/icon-minus.svg";
 import plus from "./images/icon-plus.svg";
+import Header from "./components/Header"
+import Lightbox from "./components/Lightbox"
 
-function Header() {
-  return (
-    <header className="flex items-center justify-between p-8 border-b border-slate-400 max-w-7xl mx-auto">
-      <div className="flex items-center justify-start gap-4">
-        <img src={logo} alt=""></img>
-
-        <nav className="hidden">
-          <ul className="flex items-center justify-start gap-4">
-            <li>Collections</li>
-            <li>Men</li>
-            <li>Women</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-        </nav>
-      </div>
-
-        <div>
-          <ul className="flex items-center justify-start gap-4">
-            <li><button></button></li>
-              <AiOutlineShoppingCart />
-            <li><img src={avatar} alt="" className="width-12"></img></li>
-          </ul>
-        </div>
-    </header>
-  );
-}
-
-function Lightbox(products, slideIndex, nextSlide, prevSlide) {
-  return (
-    <article className="bg-black fixed top-0 left-0 bottom-0 right-0 bg-opacity-75">
-      <div className="flex items-center justify-center">
-        {products.map((item, index) => (
-            <div
-              key={index}
-              className={slideIndex === index + 1 ? "relative" : "hidden"}
-            >
-            <img
-              src={item.mainImage}
-              alt=""
-              className="big-image lg:w-full lg:rounded-2xl"
-              style
-            />
-
-            <ul>
-              <li>
-                <button onClick={prevSlide} className="bg-white rounded-full p-5 shadow absolute left-4 top-1/2 -translate-y-1/2">
-                  <FaChevronLeft />
-                </button>
-              </li>
-              <li>
-                <button onClick={nextSlide} className="bg-white rounded-full p-5 shadow absolute right-4 top-1/2 -translate-y-1/2">
-                  <FaChevronRight />
-                </button>
-              </li>
-            </ul>
-          </div>
-        ))}
-      </div>
-    </article>
-  )
-}
 
 function App() {
   const [products] = useState(data) // state value
   const [value, setValue] = useState(0); // state value
   const [amount, setAmount] = useState(0);
   const [slideIndex, setSlideIndex] = useState(1);
+  const [showLightBox, setShowLightBox] = useState(false);
 
   const {mainImage} = products[value];
 
@@ -102,14 +41,27 @@ function App() {
   return (
     <>
       <Header />
-      <Lightbox products={products} slideIndex={slideIndex} nextSlide={nextSlide} prevSlide={prevSlide}/>
+      {showLightBox && (
+      <Lightbox
+        products={products}
+        slideIndex={slideIndex}
+        nextSlide={nextSlide}
+        prevSlide={prevSlide}
+        setShowLightBox={setShowLightBox}
+      />
+      )}
 
       <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:place-items-center lg:py-20">
         <article>
-          <div>
+          <div className="lg:hidden">
             {products.map((item, index) => (
               <div key={index} className={slideIndex === index + 1 ? "relative" : "hidden"}>
-              <img src={item.mainImage} alt="" className="w-full lg:rounded-2xl"/>
+              <img
+                src={item.mainImage}
+                alt=""
+                className="w-full lg:rounded-2xl cursor-pointer"
+                onClick={() => setShowLightBox(true)}
+              />
 
               <ul className="lg:hidden">
                 <li>
@@ -125,6 +77,15 @@ function App() {
               </ul>
             </div>
             ))}
+          </div>
+
+          <div className="hidden lg:block">
+              <img
+                src={mainImage}
+                alt=""
+                className="w-full lg:rounded-2xl cursor-pointer"
+                onClick={() => setShowLightBox(true)}
+              />
           </div>
 
           <ul className="hidden lg:flex items-center justify-start gap-5 flex-wrap mt-5">
