@@ -9,7 +9,7 @@ export default function Lightbox({
   setShowLightBox
 }) {
   return (
-    <article className="bg-black fixed top-0 left-0 bottom-0 right-0 bg-opacity-75">
+    <article className="bg-black fixed top-0 left-0 bottom-0 right-0 bg-opacity-75 z-50">
       <button onClick={() => setShowLightBox(false)}>
         <img src={close} alt="" className="w-10 absolute top-10 right-10"/>
       </button>
@@ -24,17 +24,20 @@ export default function Lightbox({
               src={item.mainImage}
               alt=""
               className="big-image lg:w-full lg:rounded-2xl"
-              style
             />
 
             <ul>
               <li>
-                <button onClick={prevSlide} className="bg-white rounded-full p-5 shadow absolute left-4 top-1/2 -translate-y-1/2">
+                <button
+                  onClick={prevSlide}
+                  className="bg-white rounded-full p-5 shadow absolute left-4 top-1/2 -translate-y-1/2">
                   <FaChevronLeft />
                 </button>
               </li>
               <li>
-                <button onClick={nextSlide} className="bg-white rounded-full p-5 shadow absolute right-4 top-1/2 -translate-y-1/2">
+                <button
+                onClick={nextSlide}
+                className="bg-white rounded-full p-5 shadow absolute right-4 top-1/2 -translate-y-1/2">
                   <FaChevronRight />
                 </button>
               </li>
